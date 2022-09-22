@@ -18,12 +18,13 @@ export default class PipelineConstruct extends Construct {
   
     blueprints.CodePipelineStack.builder()
       .name("eks-blueprints-workshop-pipeline")
-      .owner("olsoaga")
+      .owner("your-github-username")
       .repository({
-          repoUrl: 'my-eks-blueprints',
+          repoUrl: 'your-repo-name',
           credentialsSecretName: 'github-token',
           targetRevision: 'main'
       })
+      // WE ADD THE STAGES IN WAVE FROM THE PREVIOUS CODE
       .wave({
         id: "envs",
         stages: [
@@ -35,3 +36,4 @@ export default class PipelineConstruct extends Construct {
       .build(scope, id+'-stack', props);
   }
 }
+
