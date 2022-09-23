@@ -3,6 +3,8 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as blueprints from '@aws-quickstart/eks-blueprints';
 
+import { TeamPlatform, TeamApplication } from '../teams'; 
+
 export default class ClusterConstruct extends Construct {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id);
@@ -13,10 +15,8 @@ export default class ClusterConstruct extends Construct {
     const blueprint = blueprints.EksBlueprint.builder()
     .account(account)
     .region(region)
-    .addOns()
-    .teams()
+    .addOns(new blueprints.ClusterAutoScalerAddOn) // Cluster Autoscaler addon goes here
+    .teams(new TeamPlatform(account), new TeamApplication('burnham',account)) 
     .build(scope, id+'-stack');
   }
 }
-
-
